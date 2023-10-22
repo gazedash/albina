@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>albina</title>
+    <script src="https://cdn.jsdelivr.net/npm/pinecone-router@3.x.x/dist/router.min.js"></script>
+
+    <!--Import Alpine.js-->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <style>
+        .bg-hex-D7F4EE {
+            background: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div x-data="router()">
+        <!-- register the route -->
+        <template x-route="/profile/:id"></template>
+
+        <a href="/profile/1">Foo</a>
+
+        <!-- this link won't be handled by router, because of "native" -->
+        <!-- <a href="/bar" native>Bar</a> -->
+
+        <!-- now you can use the route in anyway you'd like! -->
+        <template x-if="$router.route == '/profile/:id'">
+            <div>profile <span x-text="$router.params.id"></span></div>
+        </template>
+
+        <div x-data="ddata()">
+            <input type="text" x-model="inputValue" />
+            <button x-text="btnText" @click="send()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('alpine:initialized', () => {
+            window.PineconeRouter.settings.hash = false; // use hash routing
+        });
+        // the router component.
+        function router() {
+            return {
+                settings: {},
+            };
+        }
+
+        function ddata() {
+            return {
+                // data,
+                inputValue: '',
+                btnText: 'Send',
+                fetchData: function () {
+                    console.log('aaa')
+                },
+                send: function () {
+                    console.log(this.inputValue);
+
+                    this.inputValue = '';
+                },
+            };
+        }
+    </script>
+</body>
+
+</html>
